@@ -1,66 +1,125 @@
-const MARKER = 369, // Diamond
-
-  SHINY = [
-    369, 91116, 55658, 91166, 91114, 91118, 91177, 91113, 91119, 91188, 57000,
-    91115, 91117, 98260, 98263, 98262, 98264, 98261
-  ],
-
-  BLACKLIST = [
-    // Strongboxes
-    139113, 166718, 169107, 169886, 169887, 169888, 169889, 169890, 169891,
-    // Motes
-    649, 703, 8000, 8001, 8002, 8003, 8004, 8005, 8008, 8009, 8010, 8011,
-    8012, 8013, 8014, 8015, 8016, 8017, 8018, 8019, 8020, 8021, 8022, 8023, 8025,
-    46701, MARKER,  ...SHINY
-  ]
+// Version 1.04 r:00
 
 const Command = require('command')
+const GameState = require('tera-game-state')
 
-module.exports = function Lootbeams(dispatch) {
-  const command = Command(dispatch)
+const config = require('./config.js')
 
-  let pid, markers,
-      enabled = true
+const MARKER = 369 // Diamond
 
-  command.add('beams', () => {
-    if (enabled = !enabled) {}
-    else clear()
-    command.message('Loot beams ' + (enabled? 'on.' : 'off.'), 'Lootbeams')
-  })
+module.exports = function Lootbeams(d) {
+    const command = Command(d)
+    const game = GameState(d)
 
-  command.add('clearbeams', clear)
+    // config
+    let enable = config.enable,
+        enableDungeon = config.dungeon.enable,
+        enableIod = config.iod.enable,
+        enableNpc = config.npc.enable
 
-  dispatch.hook('S_LOGIN', 4, event => {
-    pid = event.playerId
-    markers = []
-  })
+    let markers = new Set(),
+        myPlayerId = 0,
+        myZone = 0
 
-  dispatch.hook('S_SPAWN_DROPITEM', 2, event => {
-    if (!enabled || BLACKLIST.includes(event.item)) return
-    markers.push(event.id)
-    event.id -= pid
-    event.z -= 500  // Bury it balls-deep
-    event.item = MARKER
-    dispatch.toClient('S_SPAWN_DROPITEM', 2, event)
-  })
-
-  dispatch.hook('S_DESPAWN_DROPITEM', 1, event => {
-    if (!enabled) return
-    // Do I even need to check? Client seems to ignore non-existant despawns ...
-    // God damn uint64s, includes and indexOf seems to fail
-    for (let i = 0; i < markers.length; i++) {
-      if (event.id.equals(markers[i])) {
-        markers.splice(i, 1)
-        dispatch.toClient('S_DESPAWN_DROPITEM', 1, {id: event.id - pid})
-        break
-      }
+    // command
+    const PARAM = {
+        dg: () => {
+            enableDungeon = !enableDungeon
+            send(`Lootbeams in dungeons : ${enableDungeon ? 'Enabled' : 'Disabled'}`)
+        },
+        iod: () => { 
+            enableIod = !enableIod
+            send(`Lootbeams on Island of Dawn : ${enableIod ? 'Enabled' : 'Disabled'}`)
+        },
+        npc: () => {
+            enableNpc = !enableNpc
+            send(`Lootbeams for npc : ${enableNpc ? 'Enabled' : 'Disabled'}`)
+        },
+        c: () => {
+            clear(); send(`Cleared lootbeams.`)
+        },
+        s: () => { status() }
     }
-  })
 
-  dispatch.hook('S_LOAD_TOPO', 1, () => {markers = []})
+    command.add(['beams'], (p) => {
+        // toggle
+        if (!p) { enable = !enable; status() }
+        // arguments
+        else if (p in PARAM) PARAM[p]()
+        else send(`Invalid argument.`)
+    })
 
-  function clear() {
-    for (let id of markers) dispatch.toClient('S_DESPAWN_DROPITEM', 1, {id: id - pid})
-    markers = []
-  }
+    // code
+    d.hook('S_LOGIN', 'raw', () => { myPlayerId = game.me.playerId })
+    d.hook('S_LOAD_TOPO', 'raw', () => { markers.clear(); myZone = game.me.zone })
+
+    // if already marked do not double mark
+    // if in blacklist, do not render
+    // if in whitelist, spawn lootbeam
+    d.hook('S_SPAWN_DROPITEM', 6, (e) => {
+        if (!enable || markers.has(e.gameId.toString())) return
+        else if (config.blacklist.includes(e.item)) return false
+        else if ((enableDungeon && config.dungeon.zone.includes(myZone)) || 
+            ((enableIod && myZone === config.iod.zone && config.iod.whitelist.includes(e.item))))
+            mark(e)
+    })
+
+    d.hook('S_SPAWN_NPC', 7, (e) => {
+        if (!enable || !enableNpc || markers.has(e.gameId.toString())) return
+        if (myZone in config.npc.zone) {
+            for (i = 0, n = config.npc[myZone].length; i < n; i++) {
+                if (e.templateId === config.npc[myZone].npc[i]) mark(e)
+            }
+        }
+    })
+
+    // if marked item/npc despawns, despawn lootbeam
+    d.hook('S_DESPAWN_DROPITEM', 4, (e) => { 
+        if (enable || markers.size > 0) unmark(e.gameId) })
+    d.hook('S_DESPAWN_NPC', 3, (e) => {
+        if (enable || markers.size > 0) unmark(e.gameId) })
+
+    // helper
+    function mark(e) {
+        if (!markers.has(e.gameId.toString())) {
+            markers.add(e.gameId.toString())
+            e.gameId -= myPlayerId
+            e.loc.z -= 500
+            d.send('S_SPAWN_DROPITEM', 6, {
+                gameId: e.gameId,
+                loc: e.loc,
+                item: MARKER,
+                amount: 1,
+                expiry: Date.now() + 10000,
+                explode: false,
+                masterwork: false,
+                enchant: 0,
+                source: 0,
+                debug: false,
+                owners: []
+            })
+        }
+    }
+
+    function unmark(gameId) {
+        if (markers.has(gameId.toString())) {
+            markers.delete(gameId.toString())
+            d.send('S_DESPAWN_DROPITEM', 4, { gameId: gameId - myPlayerId })
+        }
+    }
+
+    function clear() {
+        markers.forEach((item) => { d.send('S_DESPAWN_DROPITEM', 4, { gameId: item - myPlayerId }) })
+        markers.clear()
+    }
+
+    function send(msg) { command.message(`[lootbeams] : ` + [...arguments].join('\n\t - ')) }
+
+    function status() { send(
+        `${enable ? 'Enabled' : 'Disabled'}`,
+        `Dungeon : ${enableDungeon ? 'Enabled'  : 'Disabled'}`,
+        `Island of Dawn : ${enableIod ? 'Enabled' : 'Disabled'}`,
+        `Npc : ${enableNpc ? 'Enabled' : 'Disabled'}`)
+    }
+
 }
