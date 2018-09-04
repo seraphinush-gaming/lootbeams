@@ -1,14 +1,14 @@
 {
 	"files": {
-		"config.js": { "overwrite": false, "hash": "a53e4e6c76a8181ad1c262a6b3435731255c931b670a537896c1f4c7d8a64e4f" },
-		"index.js": "642cf37d8b63815f2b835a06db864e6ce727facdfe521d04b960210ed7eb27fc",
-		"module.json": "906c88515bc9441e7749abf09bc403ba437ca0923afa2688c910bbe79ce3a349",
-		"README.md": "305fb48cf39993bea4f9c7e2ee3ae39d8ed493844569aec4289a4fdc7ac8f85f"
+		"config.js": { "overwrite": false, "hash": "c7e62ba3a1f095fb93f128d06a217fc2f405e76d75477a573de520eef586b719" },
+		"index.js": "eba0b20007b9a482d00ddbe76abbdeba6826c9b1d3a7ff686cc63def33a4003b",
+		"module.json": "9340c9caaf7c2f1f14686866799a15f5db833ddcc671a98f76dac6770e09c711",
+		"README.md": "106cbb030d5dc56c1c734cedb3f9dc0f4d790c96bae5d84ac6b62a0d635659bf"
 	},
 	"defs": {
 		"S_DESPAWN_DROPITEM": 4,
 		"S_DESPAWN_NPC": 3,
 		"S_SPAWN_DROPITEM": 6,
-		"S_SPAWN_NPC": 7
+		"S_SPAWN_NPC": 9
 	}
 }

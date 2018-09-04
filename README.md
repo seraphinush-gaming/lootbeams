@@ -2,7 +2,7 @@
 tera-proxy module to "erect a glistening shaft of light that penetrates the heavens"
 
 ## Dependency
-- `Command` module
+- `command` module
 - `tera-game-state` module
 
 ## Usage
@@ -17,7 +17,7 @@ tera-proxy module to "erect a glistening shaft of light that penetrates the heav
 - __`c`__
   - `C`lear rendered lootbeams
 - __`s`__
-  - Send module status
+  - Send module `s`tatus
 
 ## Config
 - __`enable`__
@@ -25,18 +25,18 @@ tera-proxy module to "erect a glistening shaft of light that penetrates the heav
   - Default is `true`
 - __`blacklist`__
   - List of items to block from rendering
-- __`iod`__
-  - `enable` : Initialize lootbeams on Island of Dawn on/off
-    - Default is `true`
-  - `whitelist` : List of items to place lootbeams on Island of Dawn
 - __`dungeon`__
   - `enable` : Initialize lootbeams in dungeons on/off
     - Default is `true`
   - `zone` : List of dungeons to place lootbeams underneath loot items
-- __ `npc`__
+- __`iod`__
+  - `enable` : Initialize lootbeams on Island of Dawn on/off
+    - Default is `true`
+  - `whitelist` : List of items to place lootbeams on Island of Dawn
+- __`npc`__
   - `enable` : Initialize lootbeams for npcs on/off
     - Default is `true`
-  - `zone` : List of zone:npc to place lootbeams underneath npcs
+  - `zone` : List of zone:npc to place lootbeams underneath static npcs
 
 ## Info
 - Original author : [Some-AV-Popo](https://github.com/Some-AV-Popo)
@@ -46,6 +46,12 @@ tera-proxy module to "erect a glistening shaft of light that penetrates the heav
 ## Changelog
 <details>
 
+    1.05
+    - Removed `command` require()
+    - Removed `tera-game-state` require()
+    - Updated to `mod.command`
+    - Updated to `mod.game`
+    - Updated to `S_SPAWN_NPC.9.def`
     1.04
     - Removed font color bloat
     - Added `tera-game-state` dependency
