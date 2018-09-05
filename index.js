@@ -1,4 +1,4 @@
-// Version 1.05 r:00
+// Version 1.05 r:01
 
 const config = require('./config.js')
 
@@ -45,8 +45,8 @@ module.exports = function Lootbeams(m) {
     });
 
     // mod.game
-    m.game.on('enter_game', () => { myPlayerId = m.game.me.playerId; });
-    m.game.on('change_zone', (zone, quick) => { markers.clear(); myZone = zone; });
+    m.game.me.on('enter_game', () => { myPlayerId = m.game.me.playerId; });
+    m.game.me.on('change_zone', (zone, quick) => { markers.clear(); myZone = zone; });
 
     // code
     // if already marked do not double mark
