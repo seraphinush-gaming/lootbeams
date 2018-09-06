@@ -15,9 +15,9 @@ tera-proxy module to "erect a glistening shaft of light that penetrates the heav
 - __`npc`__
   - Toggle lootbeams on/off for npcs according to config
 - __`c`__
-  - `C`lear rendered lootbeams
+  - "C"lear rendered lootbeams
 - __`s`__
-  - Send module `s`tatus
+  - Send module "s"tatus
 
 ## Config
 - __`enable`__

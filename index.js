@@ -1,4 +1,4 @@
-// Version 1.05 r:01
+// Version 1.05 r:02
 
 const config = require('./config.js')
 
@@ -45,7 +45,7 @@ module.exports = function Lootbeams(m) {
     });
 
     // mod.game
-    m.game.me.on('enter_game', () => { myPlayerId = m.game.me.playerId; });
+    m.game.on('enter_game', () => { myPlayerId = m.game.me.playerId; });
     m.game.me.on('change_zone', (zone, quick) => { markers.clear(); myZone = zone; });
 
     // code
@@ -54,9 +54,13 @@ module.exports = function Lootbeams(m) {
     // if in whitelist, spawn lootbeam
     m.hook('S_SPAWN_DROPITEM', 6, (e) => {
         if (!enable || markers.has(e.gameId.toString())) return
-        else if (config.blacklist.includes(e.item)) 
-            if (myZone === config.iod.zone) { return false }
-            else { return }
+        else if (config.blacklist.includes(e.item)) {
+            if (myZone === config.iod.zone) {
+                return false 
+            } else {
+                return
+            }
+        }
         else if ((enableDungeon && config.dungeon.zone.includes(myZone)) || 
             ((enableIod && myZone === config.iod.zone && config.iod.whitelist.includes(e.item))))
             mark(e);

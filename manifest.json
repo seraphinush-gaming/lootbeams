@@ -1,9 +1,20 @@
 {
+  "files": {
+    "config.js": "c7e62ba3a1f095fb93f128d06a217fc2f405e76d75477a573de520eef586b719",
+    "index.js": "6401f8486d7d6cdf72f978b0059fbf1f5feb1084d0e016bb060a5678c58e20f3",
+    "manifest.json": "34354d04307e95e9e073bcd0a633936624a69675b54093658763db7d8fc16d71",
+    "module.json": "798990605e0c83400f9fa286dfbc27524eb8a2cc04372b96943fc5562404a9cb",
+    "Newtonsoft.Json.dll": "564e6201dbf6354460d9ca180f0752d50dd7496fff49e05f67a9af42a2e772c7",
+    "README.md": "96ffa3370df6602391be38d6ae04e4a4c0f9870562a7dfd35e3ea57393d2d749"
+  }
+}
+
+{
 	"files": {
 		"config.js": { "overwrite": false, "hash": "c7e62ba3a1f095fb93f128d06a217fc2f405e76d75477a573de520eef586b719" },
-		"index.js": "1ed04224cedeff1ed3f724841e8efe7a35889255db2619cf4d1007694e5bcbea",
+		"index.js": "6401f8486d7d6cdf72f978b0059fbf1f5feb1084d0e016bb060a5678c58e20f3",
 		"module.json": "9340c9caaf7c2f1f14686866799a15f5db833ddcc671a98f76dac6770e09c711",
-		"README.md": "106cbb030d5dc56c1c734cedb3f9dc0f4d790c96bae5d84ac6b62a0d635659bf"
+		"README.md": "96ffa3370df6602391be38d6ae04e4a4c0f9870562a7dfd35e3ea57393d2d749"
 	},
 	"defs": {
 		"S_DESPAWN_DROPITEM": 4,
