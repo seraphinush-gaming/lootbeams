@@ -1,4 +1,4 @@
-// Version 1.05 r:03
+// Version 1.05 r:04
 'use strict';
 
 const config = require('./config.js');
@@ -47,7 +47,7 @@ module.exports = function Lootbeams(m) {
 
     // mod.game
     m.game.on('enter_game', () => { 
-        if (typeof m.game.me.playerId === 'bigint') {
+        if (typeof m.game.me.gameId === 'bigint') {
             myPlayerId = BigInt(m.game.me.playerId);
         } else {
             myPlayerId = m.game.me.playerId;
