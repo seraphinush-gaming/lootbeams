@@ -1,8 +1,9 @@
-// Version 1.05 r:02
+// Version 1.05 r:03
+'use strict';
 
-const config = require('./config.js')
+const config = require('./config.js');
 
-const MARKER = 369 // Diamond
+const MARKER = 369; // Diamond
 
 module.exports = function Lootbeams(m) {
 
@@ -24,15 +25,15 @@ module.exports = function Lootbeams(m) {
         },
         dg() {
             enableDungeon = !enableDungeon;
-            send(`Lootbeams in dungeons : ${enableDungeon ? 'Enabled' : 'Disabled'}`);
+            send(`Lootbeams in dungeons : ${enableDungeon ? 'En' : 'Dis'}abled`);
         },
         iod() { 
             enableIod = !enableIod;
-            send(`Lootbeams on Island of Dawn : ${enableIod ? 'Enabled' : 'Disabled'}`);
+            send(`Lootbeams on Island of Dawn : ${enableIod ? 'En' : 'Dis'}abled`);
         },
         npc() {
             enableNpc = !enableNpc;
-            send(`Lootbeams for npc : ${enableNpc ? 'Enabled' : 'Disabled'}`);
+            send(`Lootbeams for npc : ${enableNpc ? 'En' : 'Dis'}abled`);
         },
         c() {
             clear(); 
@@ -45,20 +46,26 @@ module.exports = function Lootbeams(m) {
     });
 
     // mod.game
-    m.game.on('enter_game', () => { myPlayerId = m.game.me.playerId; });
-    m.game.me.on('change_zone', (zone, quick) => { markers.clear(); myZone = zone; });
+    m.game.on('enter_game', () => { 
+        if (typeof m.game.me.playerId === 'bigint') {
+            myPlayerId = BigInt(m.game.me.playerId);
+        } else {
+            myPlayerId = m.game.me.playerId;
+        }
+    });
+    m.game.me.on('change_zone', (zone) => { markers.clear(); myZone = zone; });
 
     // code
     // if already marked do not double mark
     // if in blacklist, do not mark and/or do not render on island of dawn
     // if in whitelist, spawn lootbeam
     m.hook('S_SPAWN_DROPITEM', 6, (e) => {
-        if (!enable || markers.has(e.gameId.toString())) return
+        if (!enable || markers.has(e.gameId.toString())) return;
         else if (config.blacklist.includes(e.item)) {
             if (myZone === config.iod.zone) {
-                return false 
+                return false;
             } else {
-                return
+                return;
             }
         }
         else if ((enableDungeon && config.dungeon.zone.includes(myZone)) || 
@@ -67,7 +74,7 @@ module.exports = function Lootbeams(m) {
     });
 
     // if zone-specific npc id matches, spawn lootbeam
-    m.hook('S_SPAWN_NPC', 9, (e) => {
+    m.hook('S_SPAWN_NPC', 10, (e) => {
         if (!enable || !enableNpc || markers.has(e.gameId.toString())) return
         if (myZone in config.npc.zone) {
             for (i = 0, n = config.npc[myZone].length; i < n; i++) {
@@ -119,10 +126,10 @@ module.exports = function Lootbeams(m) {
     function send(msg) { m.command.message(`: ` + [...arguments].join('\n\t - ')); }
 
     function showStatus() { send(
-        `${enable ? 'Enabled' : 'Disabled'}`,
-        `Dungeon : ${enableDungeon ? 'Enabled'  : 'Disabled'}`,
-        `Island of Dawn : ${enableIod ? 'Enabled' : 'Disabled'}`,
-        `Npc : ${enableNpc ? 'Enabled' : 'Disabled'}`);
+        `${enable ? 'En' : 'Dis'}abled`,
+        `Dungeon : ${enableDungeon ? 'En' : 'Dis'}abled`,
+        `Island of Dawn : ${enableIod ? 'En' : 'Dis'}abled`,
+        `Npc : ${enableNpc ? 'En' : 'Dis'}abled`);
     }
 
 }

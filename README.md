@@ -1,6 +1,9 @@
 # lootbeams
 tera-proxy module to "erect a glistening shaft of light that penetrates the heavens"
 
+## Auto-update guide
+- Create a folder called `lootbeams` in `tera-proxy/bin/node_modules` and download [`module.json`](https://raw.githubusercontent.com/seraphinush-gaming/lootbeams/master/module.json) (right-click save link as...) into the folder
+
 ## Dependency
 - `command` module
 - `tera-game-state` module

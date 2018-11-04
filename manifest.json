@@ -1,25 +1,17 @@
 {
-  "files": {
-    "config.js": "c7e62ba3a1f095fb93f128d06a217fc2f405e76d75477a573de520eef586b719",
-    "index.js": "6401f8486d7d6cdf72f978b0059fbf1f5feb1084d0e016bb060a5678c58e20f3",
-    "manifest.json": "34354d04307e95e9e073bcd0a633936624a69675b54093658763db7d8fc16d71",
-    "module.json": "798990605e0c83400f9fa286dfbc27524eb8a2cc04372b96943fc5562404a9cb",
-    "Newtonsoft.Json.dll": "564e6201dbf6354460d9ca180f0752d50dd7496fff49e05f67a9af42a2e772c7",
-    "README.md": "96ffa3370df6602391be38d6ae04e4a4c0f9870562a7dfd35e3ea57393d2d749"
-  }
-}
-
-{
 	"files": {
-		"config.js": { "overwrite": false, "hash": "c7e62ba3a1f095fb93f128d06a217fc2f405e76d75477a573de520eef586b719" },
-		"index.js": "6401f8486d7d6cdf72f978b0059fbf1f5feb1084d0e016bb060a5678c58e20f3",
-		"module.json": "9340c9caaf7c2f1f14686866799a15f5db833ddcc671a98f76dac6770e09c711",
-		"README.md": "96ffa3370df6602391be38d6ae04e4a4c0f9870562a7dfd35e3ea57393d2d749"
+		"README.md": "adc56d74601d3f50753555d61c52cf02de42de51553cd1062f12a6797cd00d2d",
+		"config.js": {
+			"overwrite": false,
+			"hash": "f3441a7fbc10ed56252b25d79a6fe691c20c03754e26f2d527fe73042cf1d19d"
+		},
+		"index.js": "4c28ed2b6b7dc034efc26719bfe92f777b1cb07e915ac0d45b2579e340ca2315",
+		"module.json": "36ce14a2a859f06f893c80ac13ae44ec88838a2b01661bdaff7d555ac04f8588"
 	},
 	"defs": {
 		"S_DESPAWN_DROPITEM": 4,
 		"S_DESPAWN_NPC": 3,
 		"S_SPAWN_DROPITEM": 6,
-		"S_SPAWN_NPC": 9
+		"S_SPAWN_NPC": 10
 	}
 }
