@@ -3,6 +3,6 @@
     "name": "lootbeams",
     "author": "seraphinush",
     "description": "tera-proxy module to 'erect a glistening shaft of light that penetrates the heavens'",
-    "version": "2.06.00",
+    "version": "1.06.00",
     "servers": ["https://raw.githubusercontent.com/seraphinush-gaming/lootbeams/master/"]
 }

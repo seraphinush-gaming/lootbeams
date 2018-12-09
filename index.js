@@ -133,8 +133,6 @@ module.exports = function Lootbeams(mod) {
         markers.clear();
     }
 
-    function send(msg) { cmd.message(`: ` + [...arguments].join('\n\t - ')); }
-
     function showStatus() {
         send(
             `${enable ? 'En' : 'Dis'}abled`,
@@ -143,5 +141,7 @@ module.exports = function Lootbeams(mod) {
             `Npc : ${enableNpc ? 'En' : 'Dis'}abled`
         );
     }
+
+    function send(msg) { cmd.message(`: ` + [...arguments].join('\n\t - ')); }
 
 }
