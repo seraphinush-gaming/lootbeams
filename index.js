@@ -1,4 +1,3 @@
-// Version 1.05 r:05
 'use strict';
 
 const config = require('./config.js');
@@ -15,7 +14,7 @@ module.exports = function Lootbeams(mod) {
         enableNpc = config.npc.enable;
 
     let markers = new Set(),
-        myPlayerId = 0n,
+        myPlayerId = BigInt(0),
         myZone = 0;
 
     // command
@@ -126,15 +125,13 @@ module.exports = function Lootbeams(mod) {
     }
 
     function clear() {
-        markers.forEach((item) => {
+        for (let item in markers) {
             mod.send('S_DESPAWN_DROPITEM', 4, {
                 gameId: item - myPlayerId
             });
-        });
+        }
         markers.clear();
     }
-
-    function send(msg) { cmd.message(`: ` + [...arguments].join('\n\t - ')); }
 
     function showStatus() {
         send(
@@ -144,5 +141,7 @@ module.exports = function Lootbeams(mod) {
             `Npc : ${enableNpc ? 'En' : 'Dis'}abled`
         );
     }
+
+    function send(msg) { cmd.message(`: ` + [...arguments].join('\n\t - ')); }
 
 }
