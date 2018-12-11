@@ -1,8 +1,8 @@
 {
     "disableAutoUpdate": false,
     "name": "lootbeams",
-    "author": "seraphinush",
+    "author": "seraphinush | Some-Av-Popo",
     "description": "tera-proxy module to 'erect a glistening shaft of light that penetrates the heavens'",
-    "version": "1.06.00",
+    "version": "1.06.01",
     "servers": ["https://raw.githubusercontent.com/seraphinush-gaming/lootbeams/master/"]
 }
