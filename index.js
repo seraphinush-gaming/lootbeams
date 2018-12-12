@@ -142,6 +142,6 @@ module.exports = function Lootbeams(mod) {
         );
     }
 
-    function send(msg) { cmd.message(`: ` + [...arguments].join('\n\t - ')); }
+    function send(msg) { cmd.message(': ' + [...arguments].join('\n\t - ')); }
 
 }

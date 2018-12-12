@@ -1,12 +1,12 @@
 {
 	"files": {
-		"README.md": "c2960324b9a8d2dc50541b8a512c78c256ba38cb6cf03344cdd32661fb48e439",
+		"README.md": "016d715e1f1dba3dca3c6dc5daa7181224150d9ee87caf8d969752a7765a3170",
 		"config.js": {
 			"overwrite": false,
 			"hash": "f3441a7fbc10ed56252b25d79a6fe691c20c03754e26f2d527fe73042cf1d19d"
 		},
-		"index.js": "0a6a1a8f26ec091331c5b3afb1634032a22455d6e3d782155acb80b2f5932afe",
-		"module.json": "1f322377614c28a472dc1ed7f7a613af0e106e64c7866232732e6bcfd514a456"
+		"index.js": "9d62c0d8d46c55d85058e24355072acb28019f390fdf5c8f708ef7f80f48970c",
+		"module.json": "02eb67b8ec484c1525a0b9cdbd64aaa3ab68ca8bfae804c2ddcb643eaba276b3"
 	},
 	"defs": {
 		"S_DESPAWN_DROPITEM": 4,
