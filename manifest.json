@@ -6,7 +6,7 @@
 			"hash": "f3441a7fbc10ed56252b25d79a6fe691c20c03754e26f2d527fe73042cf1d19d"
 		},
 		"index.js": "9d62c0d8d46c55d85058e24355072acb28019f390fdf5c8f708ef7f80f48970c",
-		"module.json": "02eb67b8ec484c1525a0b9cdbd64aaa3ab68ca8bfae804c2ddcb643eaba276b3"
+		"module.json": "8415f56d8f7bfd4e916cb2e3e59611821931c71ccddcada2c0d35d1e2e98e89f"
 	},
 	"defs": {
 		"S_DESPAWN_DROPITEM": 4,
