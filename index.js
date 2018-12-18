@@ -44,7 +44,7 @@ module.exports = function Lootbeams(mod) {
     });
 
     // mod.game
-    mod.game.on('enter_game', () => myPlayerId = BigInt(mod.game.me.playerId) );
+    mod.game.on('enter_game', () => myPlayerId = BigInt(mod.game.me.playerId));
 
     mod.game.me.on('change_zone', (zone) => {
         markers.clear();
@@ -74,6 +74,9 @@ module.exports = function Lootbeams(mod) {
             for (let i = 0, n = config.npc[myZone].length; i < n; i++) {
                 if (e.templateId === config.npc[myZone].npc[i]) mark(e);
             }
+        } else if (config.npc.event.includes(e.templateId)) {
+            mark(e);
+            alert();
         }
     });
 
@@ -88,6 +91,14 @@ module.exports = function Lootbeams(mod) {
     });
 
     // helper
+    function alert() {
+        mod.send('S_DUNGEON_EVENT_MESSAGE', 2, {
+            type: 31,
+            chat: 0,
+            channel: 27,
+            message: "Event monster nearby !"
+        });
+    }
 
     function clear() {
         for (let item in markers) {

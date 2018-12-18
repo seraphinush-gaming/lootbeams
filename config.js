@@ -37,6 +37,10 @@ module.exports = {
         zone: {
             9025: [7021], // Balder's Temple, Jar
             9830: [3000400] // Celestial Arena, Tasty Watermelon
-        }
+        },
+        event: [
+            99999997,
+            99999998
+        ]
     }
 }
