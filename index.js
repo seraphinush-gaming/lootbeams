@@ -72,7 +72,8 @@ module.exports = function Lootbeams(mod) {
             return;
         if (myZone in config.npc.zone) {
             for (let i = 0, n = config.npc[myZone].length; i < n; i++) {
-                if (e.templateId === config.npc[myZone].npc[i]) mark(e);
+                if (e.templateId === config.npc[myZone].npc[i])
+                    mark(e);
             }
         } else if (config.npc.event.includes(e.templateId)) {
             mark(e);
