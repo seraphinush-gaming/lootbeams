@@ -5,14 +5,14 @@
 			"overwrite": false,
 			"hash": "22f3eded6e7f1589f53571317bc17c76d7c7bfbda03623a9da233de454377b46"
 		},
-		"index.js": "bb98c832af66bbac0ab36ec9b8a23fdba457d0e7ed9a352048466b318341a02e",
-		"module.json": "e17a04f78354fcd31378c3a537e5420db26868f82f152d0bd1d32a2fa816e977"
+		"index.js": "279aa26a5c164c8f2969c707111defb64ccd1decec2ec9b3d0d673e18349a569",
+		"module.json": "b5ccfd1e286c86ffee8d6f1430778a0d9863811fdab30b8f4eda4408315e00cd"
 	},
 	"defs": {
 		"S_DESPAWN_DROPITEM": 4,
 		"S_DESPAWN_NPC": 3,
 		"S_DUNGEON_EVENT_MESSAGE": 2,
 		"S_SPAWN_DROPITEM": 6,
-		"S_SPAWN_NPC": 10
+		"S_SPAWN_NPC": 11
 	}
 }

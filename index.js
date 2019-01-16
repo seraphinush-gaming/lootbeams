@@ -67,7 +67,7 @@ module.exports = function Lootbeams(mod) {
             mark(e);
     });
 
-    mod.hook('S_SPAWN_NPC', 10, (e) => {
+    mod.hook('S_SPAWN_NPC', 11, (e) => {
         if (!enable || !enableNpc || markers.has(e.gameId.toString()))
             return;
         if (myZone in config.npc.zone) {
