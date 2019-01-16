@@ -5,8 +5,8 @@
 			"overwrite": false,
 			"hash": "22f3eded6e7f1589f53571317bc17c76d7c7bfbda03623a9da233de454377b46"
 		},
-		"index.js": "279aa26a5c164c8f2969c707111defb64ccd1decec2ec9b3d0d673e18349a569",
-		"module.json": "b5ccfd1e286c86ffee8d6f1430778a0d9863811fdab30b8f4eda4408315e00cd"
+		"index.js": "be81ebbe24c69a637a45ba7802f0a4277cf92746723fe76b17012a16dcf8c75e",
+		"module.json": "251ce81e9c69d6a7df74b4e906b183f7c5f8a5a497e1bd34fe79b8d0254416f6"
 	},
 	"defs": {
 		"S_DESPAWN_DROPITEM": 4,
