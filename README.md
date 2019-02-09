@@ -5,7 +5,7 @@ Support seraph via paypal donations, thanks in advance !
 ```
 
 ## Auto-update guide
-- Create a folder called `lootbeams` in `tera-proxy/mods` and download >> [`module.json`](https://raw.githubusercontent.com/seraphinush-gaming/lootbeams/master/module.json) << (right-click this link and save as..) into the folder
+- Create a folder called `lootbeams` in `tera-proxy/mods` and download >> [`module.json`](https://raw.githubusercontent.com/seraphinush-gaming/lootbeams/master/module.json) << (right-click this link and save link as..) into the folder
 
 ## Usage
 - __`beams`__
@@ -47,12 +47,14 @@ Support seraph via paypal donations, thanks in advance !
 ## Changelog
 <details>
 
+    1.08
+    - Removed `tera-game-state` usage
     1.07
     - Added hot-reload support
     1.06
     - Updated for caali-proxy-nextgen
     1.05
-    - Removed `command` require()
+    - Removed `Command` require()
     - Removed `tera-game-state` require()
     - Updated to `mod.command`
     - Updated to `mod.game`

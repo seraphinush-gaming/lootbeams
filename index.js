@@ -43,12 +43,12 @@ module.exports = function Lootbeams(mod) {
         '$default': () => send(`Invalid argument. usage : beams [dg|iod|npc|c|s]`)
     });
 
-    // mod.game
-    mod.game.on('enter_game', () => myPlayerId = BigInt(mod.game.me.playerId));
+    // game state
+    mod.hook('S_LOGIN', 12, { order: -10 }, (e) => myPlayerId = BigInt(e.playerId));
 
-    mod.game.me.on('change_zone', (zone) => {
+    mod.hook('S_LOAD_TOPO', 3, (e) => {
         markers.clear();
-        myZone = zone;
+        myZone = e.zone;
     });
 
     // code
@@ -158,6 +158,7 @@ module.exports = function Lootbeams(mod) {
             enableDungeon: enableDungeon,
             enableIod: enableIod,
             enableNpc: enableNpc,
+            myPlayerId: myPlayerId,
             myZone: myZone
         };
         return state;
@@ -168,7 +169,7 @@ module.exports = function Lootbeams(mod) {
         enableDungeon = state.enableDungeon;
         enableIod = state.enableIod;
         enableNpc = state.enableNpc;
-        myPlayerId = BigInt(mod.game.me.playerId);
+        myPlayerId = myPlayerId;
         myZone = state.myZone;
         status();
     }
