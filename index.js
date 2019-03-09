@@ -1,11 +1,14 @@
 'use strict';
 
-const config = require('./config.js');
+const config = require('./config.js'),
 
-const MARKER = 369; // Diamond
+    MARKER = 369; // Diamond
 
 module.exports = function Lootbeams(mod) {
-    const cmd = mod.command || mod.require.command;
+    const cmd = mod.command;
+
+    // KR : TODO
+    let VERSION_S_SPAWN_DROPITEM = mod.majorPatchVersion >= 80 ? 7 : 6;
 
     // config
     let enable = config.enable,
@@ -39,12 +42,16 @@ module.exports = function Lootbeams(mod) {
             clear();
             send(`Cleared lootbeams.`);
         },
-        's': () => status(),
+        's': () => {
+            status();
+        },
         '$default': () => send(`Invalid argument. usage : beams [dg|iod|npc|c|s]`)
     });
 
     // game state
-    mod.hook('S_LOGIN', 12, { order: -10 }, (e) => myPlayerId = BigInt(e.playerId));
+    mod.hook('S_LOGIN', 12, { order: -10 }, (e) => {
+        myPlayerId = BigInt(e.playerId);
+    });
 
     mod.hook('S_LOAD_TOPO', 3, (e) => {
         markers.clear();
@@ -52,7 +59,7 @@ module.exports = function Lootbeams(mod) {
     });
 
     // code
-    mod.hook('S_SPAWN_DROPITEM', 6, (e) => {
+    mod.hook('S_SPAWN_DROPITEM', VERSION_S_SPAWN_DROPITEM, (e) => {
         if (!enable || markers.has(e.gameId.toString()))
             return;
         else if (config.blacklist.includes(e.item)) {
@@ -115,18 +122,45 @@ module.exports = function Lootbeams(mod) {
             markers.add(e.gameId.toString());
             e.gameId -= myPlayerId;
             e.loc.z -= 500;
-            mod.send('S_SPAWN_DROPITEM', 6, {
-                gameId: e.gameId,
-                loc: e.loc,
-                item: MARKER,
-                amount: 1,
-                expiry: Date.now() + 10000,
-                explode: false,
-                masterwork: false,
-                enchant: 0,
-                source: 0,
-                debug: false,
-                owners: []
+            // TODO
+            if (mod.majorPatchVersion >= 80) {
+                mod.send('S_SPAWN_DROPITEM', VERSION_S_SPAWN_DROPITEM, {
+                    gameId: e.gameId,
+                    loc: e.loc,
+                    item: MARKER,
+                    amount: 1,
+                    expiry: Date.now() + 10000,
+                    explode: false,
+                    masterwork: false,
+                    enchant: 0,
+                    source: 0,
+                    debug: false,
+                    owners: [],
+                    unk: ""
+                });
+            } else {
+                mod.send('S_SPAWN_DROPITEM', VERSION_S_SPAWN_DROPITEM, {
+                    gameId: e.gameId,
+                    loc: e.loc,
+                    item: MARKER,
+                    amount: 1,
+                    expiry: Date.now() + 10000,
+                    explode: false,
+                    masterwork: false,
+                    enchant: 0,
+                    source: 0,
+                    debug: false,
+                    owners: []
+                });
+            }
+        }
+    }
+
+    function unmark(gameId) {
+        if (markers.has(gameId.toString())) {
+            markers.delete(gameId.toString());
+            mod.send('S_DESPAWN_DROPITEM', 4, {
+                gameId: gameId - myPlayerId
             });
         }
     }
@@ -138,15 +172,6 @@ module.exports = function Lootbeams(mod) {
             `Island of Dawn : ${enableIod ? 'En' : 'Dis'}abled`,
             `Npc : ${enableNpc ? 'En' : 'Dis'}abled`
         );
-    }
-
-    function unmark(gameId) {
-        if (markers.has(gameId.toString())) {
-            markers.delete(gameId.toString());
-            mod.send('S_DESPAWN_DROPITEM', 4, {
-                gameId: gameId - myPlayerId
-            });
-        }
     }
 
     function send(msg) { cmd.message(': ' + [...arguments].join('\n\t - ')); }

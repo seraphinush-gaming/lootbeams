@@ -30,7 +30,7 @@ module.exports = {
         whitelist: [
             399 // Semi-Enigmatic Scroll
         ],
-        zone: 13 // do not change
+        zone: 13 // Do not change
     },
     npc: {
         enable: true,
