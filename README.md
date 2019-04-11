@@ -47,40 +47,40 @@ Support seraph via paypal donations, thanks in advance !
 ## Changelog
 <details>
 
-  1.08
-  - Removed `tera-game-state` usage
-  1.07
-  - Added hot-reload support
-  1.06
-  - Updated for caali-proxy-nextgen
-  1.05
-  - Removed `Command` require()
-  - Removed `tera-game-state` require()
-  - Updated to `mod.command`
-  - Updated to `mod.game`
-  - Updated to `S_SPAWN_NPC.9.def`
-  1.04
-  - Removed font color bloat
-  - Added `tera-game-state` dependency
-  1.03
-  - Updated module hook versions
-  - Added hooks to S_SPAWN_NPC and S_DESPAWN_NPC
-  - Removed commands `clearbeams`, `clear`
-  - Added parameters `iod`, `dg`, `npc`, `c`, `s`
-  - Refactored config file
-  -- Added `enable`
-  -- Added `blacklist`
-  -- Added `iod`
-  --- `enable`
-  --- `whitelist`
-  --- `zone
-  -- Added `dungeon`
-  --- `enable`
-  --- `zone`
-  -- Added `npc`
-  --- `enable`
-  --- `zone`
-  1.01
-  - Initial fork
+    1.08
+    - Removed `tera-game-state` usage
+    1.07
+    - Added hot-reload support
+    1.06
+    - Updated for caali-proxy-nextgen
+    1.05
+    - Removed `Command` require()
+    - Removed `tera-game-state` require()
+    - Updated to `mod.command`
+    - Updated to `mod.game`
+    - Updated to `S_SPAWN_NPC.9.def`
+    1.04
+    - Removed font color bloat
+    - Added `tera-game-state` dependency
+    1.03
+    - Updated module hook versions
+    - Added hooks to S_SPAWN_NPC and S_DESPAWN_NPC
+    - Removed commands `clearbeams`, `clear`
+    - Added parameters `iod`, `dg`, `npc`, `c`, `s`
+    - Refactored config file
+    -- Added `enable`
+    -- Added `blacklist`
+    -- Added `iod`
+    --- `enable`
+    --- `whitelist`
+    --- `zone
+    -- Added `dungeon`
+    --- `enable`
+    --- `zone`
+    -- Added `npc`
+    --- `enable`
+    --- `zone`
+    1.01
+    - Initial fork
 
 </details>
