@@ -2,7 +2,8 @@
 
 const config = require('./config.js');
 
-const MARKER = 369; // Diamond
+const PUR_MARKER = 209904;      // Skill Advancement Tome IV
+const RED_MARKER = 88634;   // onset mask
 
 module.exports = function Lootbeams(mod) {
   const cmd = mod.command;
@@ -14,7 +15,8 @@ module.exports = function Lootbeams(mod) {
     enableNpc = config.npc.enable;
 
   let markers = new Set(),
-    myPlayerId = BigInt(0),
+    myPlayerId32 = 0,
+    myPlayerId64 = BigInt(0),
     myZone = 0;
 
   // command
@@ -42,6 +44,9 @@ module.exports = function Lootbeams(mod) {
     'status': () => {
       status();
     },
+    'test': () => {
+      //
+    },
     '$default': () => {
       send(`Invalid argument. usage : beams [dg|iod|npc|c|status]`);
     }
@@ -49,7 +54,8 @@ module.exports = function Lootbeams(mod) {
 
   // game state
   mod.hook('S_LOGIN', 12, { order: -10 }, (e) => {
-    myPlayerId = BigInt(e.playerId);
+    myPlayerId32 = e.playerId;
+    myPlayerId64 = BigInt(e.playerId);
   });
 
   mod.hook('S_LOAD_TOPO', 3, (e) => {
@@ -111,7 +117,7 @@ module.exports = function Lootbeams(mod) {
   function clear() {
     for (let item in markers) {
       mod.send('S_DESPAWN_DROPITEM', 4, {
-        gameId: item - myPlayerId
+        gameId: item - myPlayerId64
       });
     }
     markers.clear();
@@ -120,20 +126,15 @@ module.exports = function Lootbeams(mod) {
   function mark(e) {
     if (!markers.has(e.gameId.toString())) {
       markers.add(e.gameId.toString());
-      e.gameId -= myPlayerId;
-      e.loc.z -= 500;
+      e.gameId -= myPlayerId64;
+      e.loc.z -= 100;
       mod.send('S_SPAWN_DROPITEM', 7, {
         gameId: e.gameId,
         loc: e.loc,
-        item: MARKER,
+        item: PUR_MARKER,
         amount: 1,
-        expiry: Date.now() + 10000,
-        explode: false,
-        masterwork: false,
-        enchant: 0,
-        source: 0,
-        debug: false,
-        owners: [],
+        expiry: 10000,
+        owners: [{ playerId: myPlayerId32 }],
         ownerName: ""
       });
     }
@@ -143,7 +144,7 @@ module.exports = function Lootbeams(mod) {
     if (markers.has(gameId.toString())) {
       markers.delete(gameId.toString());
       mod.send('S_DESPAWN_DROPITEM', 4, {
-        gameId: gameId - myPlayerId
+        gameId: gameId - myPlayerId64
       });
     }
   }
@@ -166,7 +167,8 @@ module.exports = function Lootbeams(mod) {
       enableDungeon: enableDungeon,
       enableIod: enableIod,
       enableNpc: enableNpc,
-      myPlayerId: myPlayerId,
+      myPlayerId32: myPlayerId32,
+      myPlayerId64: myPlayerId64,
       myZone: myZone
     };
     return state;
@@ -177,7 +179,8 @@ module.exports = function Lootbeams(mod) {
     enableDungeon = state.enableDungeon;
     enableIod = state.enableIod;
     enableNpc = state.enableNpc;
-    myPlayerId = myPlayerId;
+    myPlayerId32 = myPlayerId32;
+    myPlayerId64 = BigInt(myPlayerId64);
     myZone = state.myZone;
     status();
   }
