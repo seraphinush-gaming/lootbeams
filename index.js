@@ -2,7 +2,7 @@
 
 const config = require('./config.js');
 
-const PUR_MARKER = 209904;      // Skill Advancement Tome IV
+const PUR_MARKER = 209904;  // Skill Advancement Tome IV
 const RED_MARKER = 88634;   // onset mask
 
 module.exports = function Lootbeams(mod) {
@@ -53,7 +53,7 @@ module.exports = function Lootbeams(mod) {
   });
 
   // game state
-  mod.hook('S_LOGIN', 12, { order: -10 }, (e) => {
+  mod.hook('S_LOGIN', mod.majorPatchVersion >= 81 ? 13 : 12, { order: -10 }, (e) => {
     myPlayerId32 = e.playerId;
     myPlayerId64 = BigInt(e.playerId);
   });
