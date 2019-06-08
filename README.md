@@ -27,25 +27,6 @@ Support seraph via paypal donations, thanks in advance !
 - __`status`__
   - Send module "s"tatus
 
-## Config
-- __`enable`__
-  - Initialize module on/off
-  - Default is `true`
-- __`blacklist`__
-  - List of items to block from rendering
-- __`dungeon`__
-  - `enable` : Initialize lootbeams in dungeons on/off
-    - Default is `true`
-  - `zone` : List of dungeons to place lootbeams underneath loot items
-- __`iod`__
-  - `enable` : Initialize lootbeams on Island of Dawn on/off
-    - Default is `true`
-  - `whitelist` : List of items to place lootbeams on Island of Dawn
-- __`npc`__
-  - `enable` : Initialize lootbeams for npcs on/off
-    - Default is `true`
-  - `zone` : List of zone:npc to place lootbeams underneath static npcs
-
 ## Info
 - Original author : [Some-AV-Popo](https://github.com/Some-AV-Popo)
 - Config file can be configured via editors such as Notepad
@@ -53,6 +34,8 @@ Support seraph via paypal donations, thanks in advance !
 ## Changelog
 <details>
 
+    1.09
+    - Added settings-migrator support
     1.08
     - Removed `tera-game-state` usage
     1.07

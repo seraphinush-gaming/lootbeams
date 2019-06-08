@@ -1,51 +1,47 @@
 'use strict';
 
-const config = require('./config.js');
-
-const PUR_MARKER = 209904;  // Skill Advancement Tome IV
+const PPL_MARKER = 209904;  // Skill Advancement Tome IV
 const RED_MARKER = 88634;   // onset mask
 
 module.exports = function Lootbeams(mod) {
   const cmd = mod.command;
 
-  // config
-  let enable = config.enable,
-    enableDungeon = config.dungeon.enable,
-    enableIod = config.iod.enable,
-    enableNpc = config.npc.enable;
+  let settings = mod.settings;
 
-  let markers = new Set(),
-    myPlayerId32 = 0,
-    myPlayerId64 = BigInt(0),
-    myZone = 0;
+  let markers = new Set();
+  let myPlayerId32 = 0;
+  let myPlayerId64 = BigInt(0);
+  let myZone = 0;
 
   // command
   cmd.add('beams', {
     '$none': () => {
-      enable = !enable;
-      status();
+      settings.enable = !settings.enable;
+      send(`Lootbeams ${settings.enable ? 'En' : 'Dis'}abled`);
     },
     'dg': () => {
-      enableDungeon = !enableDungeon;
-      send(`Lootbeams in dungeons : ${enableDungeon ? 'En' : 'Dis'}abled`);
+      settings.dungeon.enable = !settings.dungeon.enable;
+      send(`Lootbeams in dungeons : ${settings.dungeon.enable ? 'En' : 'Dis'}abled`);
     },
     'iod': () => {
-      enableIod = !enableIod;
-      send(`Lootbeams on Island of Dawn : ${enableIod ? 'En' : 'Dis'}abled`);
+      settings.iod.enable = !settings.iod.enable;
+      send(`Lootbeams on Island of Dawn : ${settings.iod.enable ? 'En' : 'Dis'}abled`);
     },
     'npc': () => {
-      enableNpc = !enableNpc;
-      send(`Lootbeams for npc : ${enableNpc ? 'En' : 'Dis'}abled`);
+      settings.npc.enable = !settings.npc.enable;
+      send(`Lootbeams for npc : ${settings.npc.enable ? 'En' : 'Dis'}abled`);
     },
     'c': () => {
       clear();
       send(`Cleared lootbeams.`);
     },
     'status': () => {
-      status();
-    },
-    'test': () => {
-      //
+      send(
+        `${settings.enable ? 'En' : 'Dis'}abled`,
+        `Dungeon : ${settings.dungeon.enable ? 'En' : 'Dis'}abled`,
+        `Island of Dawn : ${settings.iod.enable ? 'En' : 'Dis'}abled`,
+        `Npc : ${settings.npc.enable ? 'En' : 'Dis'}abled`
+      );
     },
     '$default': () => {
       send(`Invalid argument. usage : beams [dg|iod|npc|c|status]`);
@@ -58,50 +54,9 @@ module.exports = function Lootbeams(mod) {
     myPlayerId64 = BigInt(e.playerId);
   });
 
-  mod.hook('S_LOAD_TOPO', 3, (e) => {
+  mod.hook('S_LOAD_TOPO', 3, { order: -10 }, (e) => {
     markers.clear();
     myZone = e.zone;
-  });
-
-  // code
-  mod.hook('S_SPAWN_DROPITEM', 7, (e) => {
-    if (!enable || markers.has(e.gameId.toString())) {
-      return;
-    } else if (config.blacklist.includes(e.item)) {
-      if (myZone === config.iod.zone) {
-        return false;
-      } else {
-        return;
-      }
-    }
-    else if ((enableDungeon && config.dungeon.zone.includes(myZone)) ||
-      ((enableIod && myZone === config.iod.zone && config.iod.whitelist.includes(e.item))))
-      mark(e);
-  });
-
-  mod.hook('S_SPAWN_NPC', 11, (e) => {
-    if (!enable || !enableNpc || markers.has(e.gameId.toString())) {
-      return;
-    }
-    if (myZone in config.npc.zone) {
-      for (let i = 0, n = config.npc.zone[myZone].length; i < n; i++) {
-        if (e.templateId === config.npc.zone[myZone][i])
-          mark(e);
-      }
-    } else if (config.npc.event.includes(e.templateId)) {
-      mark(e);
-      alert();
-    }
-  });
-
-  mod.hook('S_DESPAWN_DROPITEM', 4, (e) => {
-    if (enable || markers.size > 0)
-      unmark(e.gameId);
-  });
-
-  mod.hook('S_DESPAWN_NPC', 3, (e) => {
-    if (enable || markers.size > 0)
-      unmark(e.gameId);
   });
 
   // helper
@@ -131,7 +86,7 @@ module.exports = function Lootbeams(mod) {
       mod.send('S_SPAWN_DROPITEM', 7, {
         gameId: e.gameId,
         loc: e.loc,
-        item: PUR_MARKER,
+        item: PPL_MARKER,
         amount: 1,
         expiry: 10000,
         owners: [{ playerId: myPlayerId32 }],
@@ -149,24 +104,53 @@ module.exports = function Lootbeams(mod) {
     }
   }
 
-  function status() {
-    send(
-      `${enable ? 'En' : 'Dis'}abled`,
-      `Dungeon : ${enableDungeon ? 'En' : 'Dis'}abled`,
-      `Island of Dawn : ${enableIod ? 'En' : 'Dis'}abled`,
-      `Npc : ${enableNpc ? 'En' : 'Dis'}abled`
-    );
-  }
+  // code
+  mod.hook('S_SPAWN_DROPITEM', 7, (e) => {
+    if (settings.enable && !markers.has(e.gameId.toString())) {
+      if (settings.blacklist.includes(e.item)) {
+        return false;
+      }
+      if (settings.iod.enable && settings.iod.zone === myZone) {
+        if (settings.iod.whitelist.includes(e.item)) {
+          mark(e);
+        }
+      }
+      else if (settings.dungeon.enable && settings.dungeon.zone.includes(myZone)) {
+        mark(e);
+      }
+    }
+  });
 
-  function send(msg) { cmd.message(': ' + [...arguments].join('\n\t - ')); }
+  mod.hook('S_DESPAWN_DROPITEM', 4, (e) => {
+    if (settings.enable || markers.size > 0)
+      unmark(e.gameId);
+  });
+
+  mod.hook('S_SPAWN_NPC', 11, (e) => {
+    if (settings.enable && !markers.has(e.gameId.toString())) {
+      if (myZone in settings.npc.zone) {
+        for (let i = 0, n = settings.npc.zone[myZone].length; i < n; i++) {
+          if (e.templateId === settings.npc.zone[myZone][i])
+            mark(e);
+        }
+      }
+      else if (settings.npc.event.includes(e.templateId)) {
+        mark(e);
+        alert();
+      }
+    }
+  });
+
+  mod.hook('S_DESPAWN_NPC', 3, (e) => {
+    if (settings.enable || markers.size > 0)
+      unmark(e.gameId);
+  });
+
+  function send() { cmd.message(': ' + [...arguments].join('\n\t - ')); }
 
   // reload
   this.saveState = () => {
     let state = {
-      enable: enable,
-      enableDungeon: enableDungeon,
-      enableIod: enableIod,
-      enableNpc: enableNpc,
       myPlayerId32: myPlayerId32,
       myPlayerId64: myPlayerId64,
       myZone: myZone
@@ -175,10 +159,6 @@ module.exports = function Lootbeams(mod) {
   }
 
   this.loadState = (state) => {
-    enable = state.enable;
-    enableDungeon = state.enableDungeon;
-    enableIod = state.enableIod;
-    enableNpc = state.enableNpc;
     myPlayerId32 = myPlayerId32;
     myPlayerId64 = BigInt(myPlayerId64);
     myZone = state.myZone;
