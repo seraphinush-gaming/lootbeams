@@ -1,5 +1,5 @@
 {
-  "author": "seraphinush | Some-Av-Popo",
+  "author": "seraphinush . Some-Av-Popo",
   "description": "tera-toolbox module to 'erect a glistening shaft of light that penetrates the heavens'",
   "disableAutoUpdate": false,
   "donationUrl": "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=B7QQJZV9L5P2J&source=url",
@@ -14,5 +14,5 @@
     "https://raw.githubusercontent.com/seraphinush-gaming/lootbeams/master/"
   ],
   "supportUrl": "https://github.com/seraphinush-gaming/lootbeams/blob/master/README.md",
-  "version": "1.09.00"
+  "version": "1.09.01"
 }

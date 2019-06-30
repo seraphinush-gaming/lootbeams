@@ -83,7 +83,7 @@ module.exports = function Lootbeams(mod) {
       markers.add(e.gameId.toString());
       e.gameId -= myPlayerId64;
       e.loc.z -= 100;
-      mod.send('S_SPAWN_DROPITEM', 7, {
+      mod.send('S_SPAWN_DROPITEM', 8, {
         gameId: e.gameId,
         loc: e.loc,
         item: PPL_MARKER,
@@ -105,7 +105,7 @@ module.exports = function Lootbeams(mod) {
   }
 
   // code
-  mod.hook('S_SPAWN_DROPITEM', 7, (e) => {
+  mod.hook('S_SPAWN_DROPITEM', 8, (e) => {
     if (settings.enable && !markers.has(e.gameId.toString())) {
       if (settings.blacklist.includes(e.item)) {
         return false;
