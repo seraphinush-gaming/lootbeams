@@ -49,7 +49,17 @@ module.exports = function Lootbeams(mod) {
   });
 
   // game state
-  mod.hook('S_LOGIN', mod.majorPatchVersion >= 81 ? 13 : 12, { order: -10 }, (e) => {
+  mod.game.on('enter_game', () => {
+    myPlayerId32 = mod.game.me.playerId;
+    myPlayerId64 = BigInt(mod.game.me.playerId);
+  })
+
+  mod.game.me.on('change_zone', (zone) => {
+    markers.clear();
+    myZone = zone;
+  });
+
+  /* mod.hook('S_LOGIN', mod.majorPatchVersion >= 81 ? 13 : 12, { order: -10 }, (e) => {
     myPlayerId32 = e.playerId;
     myPlayerId64 = BigInt(e.playerId);
   });
@@ -57,7 +67,7 @@ module.exports = function Lootbeams(mod) {
   mod.hook('S_LOAD_TOPO', 3, { order: -10 }, (e) => {
     markers.clear();
     myZone = e.zone;
-  });
+  }); */
 
   // helper
   function alert() {
@@ -122,16 +132,18 @@ module.exports = function Lootbeams(mod) {
   });
 
   mod.hook('S_DESPAWN_DROPITEM', 4, (e) => {
-    if (settings.enable || markers.size > 0)
+    if (settings.enable || markers.size > 0) {
       unmark(e.gameId);
+    }
   });
 
   mod.hook('S_SPAWN_NPC', 11, (e) => {
     if (settings.enable && !markers.has(e.gameId.toString())) {
       if (myZone in settings.npc.zone) {
         for (let i = 0, n = settings.npc.zone[myZone].length; i < n; i++) {
-          if (e.templateId === settings.npc.zone[myZone][i])
+          if (e.templateId === settings.npc.zone[myZone][i]) {
             mark(e);
+          }
         }
       }
       else if (settings.npc.event.includes(e.templateId)) {
@@ -142,8 +154,9 @@ module.exports = function Lootbeams(mod) {
   });
 
   mod.hook('S_DESPAWN_NPC', 3, (e) => {
-    if (settings.enable || markers.size > 0)
+    if (settings.enable || markers.size > 0) {
       unmark(e.gameId);
+    }
   });
 
   function send() { cmd.message(': ' + [...arguments].join('\n\t - ')); }

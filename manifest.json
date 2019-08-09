@@ -1,16 +1,14 @@
 {
 	"files": {
-		"README.md": "7f78998e2e41ff5f815ca194898bd6fca2f99088fbdb28b567abef4909f6cc48",
-		"index.js": "b430b1c896e6f38fe38b9e4387c1ee5ae0e37c32e8410bb2f77f8c8aa41dfab3",
-		"module.json": "9bfa5275008009fbaa1f1bf0772bcd0e55d06bb3e1398c92a62ba39813ed3521",
+		"README.md": "21f31cf5507b4feae4ab13d119501eeac67162b9d99560cb985386ace0fb136a",
+		"index.js": "4a65881647d67ab9e362e06f68168a6d321c672e17799e16735597437059cf73",
+		"module.json": "ee9e9cc55596160c22c702d6161c93758c12999c307d2208332ccfb2d1bd67a8",
 		"settings.js": "a1f85de26d8f2b27c754138c5f91b744c5ec79a089e08e6d8b611f13deb8a156"
 	},
 	"defs": {
 		"S_DESPAWN_DROPITEM": 4,
 		"S_DESPAWN_NPC": 3,
 		"S_DUNGEON_EVENT_MESSAGE": 2,
-		"S_LOAD_TOPO": 3,
-		"S_LOGIN": [12,13],
 		"S_SPAWN_DROPITEM": 8,
 		"S_SPAWN_NPC": 11
 	}
