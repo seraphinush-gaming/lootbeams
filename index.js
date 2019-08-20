@@ -1,7 +1,6 @@
 'use strict';
 
 const PPL_MARKER = 209904;  // Skill Advancement Tome IV
-const RED_MARKER = 88634;   // onset mask
 
 module.exports = function Lootbeams(mod) {
   const cmd = mod.command;
@@ -17,19 +16,19 @@ module.exports = function Lootbeams(mod) {
   cmd.add('beams', {
     '$none': () => {
       settings.enable = !settings.enable;
-      send(`Lootbeams ${settings.enable ? 'En' : 'Dis'}abled`);
+      send(`${settings.enable ? 'en' : 'dis'}abled`);
     },
     'dg': () => {
       settings.dungeon.enable = !settings.dungeon.enable;
-      send(`Lootbeams in dungeons : ${settings.dungeon.enable ? 'En' : 'Dis'}abled`);
+      send(`Lootbeams in dungeons : ${settings.dungeon.enable ? 'en' : 'dis'}abled`);
     },
     'iod': () => {
       settings.iod.enable = !settings.iod.enable;
-      send(`Lootbeams on Island of Dawn : ${settings.iod.enable ? 'En' : 'Dis'}abled`);
+      send(`Lootbeams on Island of Dawn : ${settings.iod.enable ? 'en' : 'dis'}abled`);
     },
     'npc': () => {
       settings.npc.enable = !settings.npc.enable;
-      send(`Lootbeams for npc : ${settings.npc.enable ? 'En' : 'Dis'}abled`);
+      send(`Lootbeams for npc : ${settings.npc.enable ? 'en' : 'dis'}abled`);
     },
     'c': () => {
       clear();
@@ -38,9 +37,9 @@ module.exports = function Lootbeams(mod) {
     'status': () => {
       send(
         `${settings.enable ? 'En' : 'Dis'}abled`,
-        `Dungeon : ${settings.dungeon.enable ? 'En' : 'Dis'}abled`,
-        `Island of Dawn : ${settings.iod.enable ? 'En' : 'Dis'}abled`,
-        `Npc : ${settings.npc.enable ? 'En' : 'Dis'}abled`
+        `Dungeon : ${settings.dungeon.enable}`,
+        `Island of Dawn : ${settings.iod.enable}`,
+        `Npc : ${settings.npc.enable}`
       );
     },
     '$default': () => {
@@ -58,16 +57,6 @@ module.exports = function Lootbeams(mod) {
     markers.clear();
     myZone = zone;
   });
-
-  /* mod.hook('S_LOGIN', mod.majorPatchVersion >= 81 ? 13 : 12, { order: -10 }, (e) => {
-    myPlayerId32 = e.playerId;
-    myPlayerId64 = BigInt(e.playerId);
-  });
-
-  mod.hook('S_LOAD_TOPO', 3, { order: -10 }, (e) => {
-    markers.clear();
-    myZone = e.zone;
-  }); */
 
   // helper
   function alert() {
