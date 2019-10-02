@@ -18,6 +18,20 @@ module.exports = function Lootbeams(mod) {
       settings.enable = !settings.enable;
       send(`${settings.enable ? 'en' : 'dis'}abled`);
     },
+    'add': {
+      'blacklist': () => {
+        //
+      },
+      'dungeon': () => {
+        //
+      },
+      'npc': () => {
+        //
+      },
+      '$default': () => {
+        //
+      }
+    },
     'dg': () => {
       settings.dungeon.enable = !settings.dungeon.enable;
       send(`Lootbeams in dungeons : ${settings.dungeon.enable ? 'en' : 'dis'}abled`);
@@ -33,6 +47,20 @@ module.exports = function Lootbeams(mod) {
     'c': () => {
       clear();
       send(`Cleared lootbeams.`);
+    },
+    'remove': {
+      'blacklist': () => {
+        //
+      },
+      'dungeon': () => {
+        //
+      },
+      'npc': () => {
+        //
+      },
+      '$default': () => {
+        //
+      }
     },
     'status': () => {
       send(
