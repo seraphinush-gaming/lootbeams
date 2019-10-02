@@ -3,8 +3,8 @@
 const PPL_MARKER = 209904;  // Skill Advancement Tome IV
 
 module.exports = function Lootbeams(mod) {
+  
   const cmd = mod.command;
-
   let settings = mod.settings;
 
   let markers = new Set();
