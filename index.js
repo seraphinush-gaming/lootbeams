@@ -3,7 +3,7 @@
 const PPL_MARKER = 209904;  // Skill Advancement Tome IV
 
 module.exports = function Lootbeams(mod) {
-  
+
   const cmd = mod.command;
   let settings = mod.settings;
 
@@ -20,16 +20,16 @@ module.exports = function Lootbeams(mod) {
     },
     'add': {
       'blacklist': () => {
-        //
+        // wip
       },
       'dungeon': () => {
-        //
+        // wip
       },
       'npc': () => {
-        //
+        // wip
       },
       '$default': () => {
-        //
+        // wip
       }
     },
     'dg': () => {
@@ -46,20 +46,19 @@ module.exports = function Lootbeams(mod) {
     },
     'c': () => {
       clear();
-      send(`Cleared lootbeams.`);
     },
     'remove': {
       'blacklist': () => {
-        //
+        // wip
       },
       'dungeon': () => {
-        //
+        // wip
       },
       'npc': () => {
-        //
+        // wip
       },
       '$default': () => {
-        //
+        // wip
       }
     },
     'status': () => {
@@ -103,6 +102,7 @@ module.exports = function Lootbeams(mod) {
       });
     }
     markers.clear();
+    send(`Cleared lootbeams.`);
   }
 
   function mark(e) {
@@ -171,9 +171,8 @@ module.exports = function Lootbeams(mod) {
   });
 
   mod.hook('S_DESPAWN_NPC', 3, (e) => {
-    if (settings.enable || markers.size > 0) {
+    if (settings.enable || markers.size > 0)
       unmark(e.gameId);
-    }
   });
 
   function send() { cmd.message(': ' + [...arguments].join('\n\t - ')); }
@@ -192,7 +191,6 @@ module.exports = function Lootbeams(mod) {
     myPlayerId32 = myPlayerId32;
     myPlayerId64 = BigInt(myPlayerId64);
     myZone = state.myZone;
-    status();
   }
 
   this.destructor = () => {
