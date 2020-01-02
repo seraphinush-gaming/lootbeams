@@ -175,7 +175,7 @@ module.exports = function Lootbeams(mod) {
       unmark(e.gameId);
   });
 
-  function send() { cmd.message(': ' + [...arguments].join('\n\t - ')); }
+  function send() { cmd.message(': ' + [...arguments].join('\n - ')); }
 
   // reload
   this.saveState = () => {

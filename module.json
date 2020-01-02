@@ -11,8 +11,8 @@
     "settingsMigrator": "settings.js"
   },
   "servers": [
-    "https://raw.githubusercontent.com/seraphinush-gaming/lootbeams/master/"
+    "https://raw.githubusercontent.com/ylennia-archives/lootbeams/master/"
   ],
-  "supportUrl": "https://github.com/seraphinush-gaming/lootbeams/blob/master/README.md",
-  "version": "1.10.06"
+  "supportUrl": "https://github.com/ylennia-archives/lootbeams/blob/master/README.md",
+  "version": "1.10.07"
 }
